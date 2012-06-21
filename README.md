@@ -1,7 +1,13 @@
-Apache+PHP build pack
+ZF2 build pack
 ========================
 
-This is a build pack bundling PHP and Apache for Heroku apps.
+This is a build pack bundling PHP and Apache for Heroku apps. It allows the deployment of [ZendFramework 2](http://framework.zend.com/zf2) applications
+on Heroku.
+
+It supports the installation of any dependancies through the use of Composer. It will even download the composer.phar if it
+is not present in the project.
+
+Detection is done by looking for a index.php file in the public directory.
 
 Configuration
 -------------
@@ -67,3 +73,9 @@ Meta
 
 Created by Pedro Belo.
 Many thanks to Keith Rarick for the help with assorted Unix topics :)
+
+Changelog
+---
+
+- Detection is done from public/index.php
+- Composer support was added.
