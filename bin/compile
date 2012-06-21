@@ -72,7 +72,7 @@ if [ -f www/composer.json ]; then
   if [ ! -f www/composer.installed ]; then
   	echo "-----> Installing Composer dependencies"
   	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
-  	touch www/composer.installed
+  	touch composer.installed
   else
   	echo "-----> Updating Composer dependencies"
   	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
