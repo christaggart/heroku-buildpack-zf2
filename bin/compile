@@ -15,6 +15,8 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
+COMPOSER_URL="http://getcomposer.org/composer.phar"
+
 # include .files when moving things around
 shopt -s dotglob
 
@@ -45,6 +47,33 @@ cp $LP_DIR/conf/php.ini php
 # make php available on bin
 mkdir -p bin
 ln -s /app/php/bin/php bin/php
+
+
+# check if we have Composer dependencies and vendors are not bundled
+if [ -f www/composer.json ]; then
+
+  # download composer.phar if it is not available
+  if [! -f www/composer.phar ]; then
+  	echo "-----> Downloading and Installing Composer"
+  	curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
+  fi
+  
+  # move into webroot
+  cd www
+
+  # determine whether to update or install. If a lock file is present we want to
+  # update instead of install
+  if [ ! -d www/composer.lock ]; then
+  	echo "-----> Installing Composer dependencies"
+  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
+  else
+  	echo "-----> Updating Composer dependencies"
+  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
+  fi
+
+  # move back to the build directory
+  cd $BUILD_DIR
+fi
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do
