@@ -54,15 +54,15 @@ if [ -f www/composer.json ]; then
   # download composer.phar if it is not available
   if [ ! -f www/composer.phar ]; then
   	echo "-----> Downloading and Installing Composer"
-  	curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
+  	curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar > /dev/null
   fi
   
   # move into webroot
   cd www
 
   # check for composer updates
-  echo "-----> Looking for Composer updates"
-  LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar self-update
+  echo "-----> Updating Composer"
+  LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar self-update > /dev/null
 
   # determine whether to update or install. If a lock file is present we want to
   # update instead of install
@@ -70,12 +70,12 @@ if [ -f www/composer.json ]; then
   unset GIT_DIR
 
   if [ ! -f www/composer.installed ]; then
-  	echo "-----> Installing Composer dependencies"
-  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
+  	echo "-----> Installing Composer Dependencies"
+  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install > /dev/null
   	touch composer.installed
   else
-  	echo "-----> Updating Composer dependencies"
-  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
+  	echo "-----> Updating Composer Dependencies"
+  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update > /dev/null
   fi
 
   # move back to the build directory
