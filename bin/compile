@@ -55,13 +55,14 @@ if [ -f www/composer.json ]; then
   if [ ! -f www/composer.phar ]; then
   	echo "-----> Downloading and Installing Composer"
   	curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
-  else
-  	echo "-----> Looking for Composer updates"
-  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar self-update
   fi
   
   # move into webroot
   cd www
+
+  # check for composer updates
+  echo "-----> Looking for Composer updates"
+  LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar self-update
 
   # determine whether to update or install. If a lock file is present we want to
   # update instead of install
