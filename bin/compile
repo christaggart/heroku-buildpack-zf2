@@ -52,7 +52,7 @@ ln -s /app/php/bin/php bin/php
 if [ -f www/composer.json ]; then
 
   # download composer.phar if it is not available
-  if [! -f www/composer.phar ]; then
+  if [ ! -f www/composer.phar ]; then
   	echo "-----> Downloading and Installing Composer"
   	curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
   else
@@ -67,9 +67,11 @@ if [ -f www/composer.json ]; then
   # update instead of install
   GIT_DIR_ORIG=$GIT_DIR
   unset GIT_DIR
-  if [ ! -d www/composer.lock ]; then
+
+  if [ ! -f www/composer.installed ]; then
   	echo "-----> Installing Composer dependencies"
   	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
+  	touch www/composer.installed
   else
   	echo "-----> Updating Composer dependencies"
   	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
