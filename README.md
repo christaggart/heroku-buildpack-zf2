@@ -74,6 +74,8 @@ Meta
 Created by Pedro Belo.
 Many thanks to Keith Rarick for the help with assorted Unix topics :)
 
+Changes for ZF2 made by Jaco Nel
+
 Changelog
 ---
 
