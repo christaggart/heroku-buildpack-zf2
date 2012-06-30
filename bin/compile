@@ -87,7 +87,8 @@ fi
 for dir in www/module/*/
 do
     dir=${dir%*/}
-    echo ${dir##*/}
+
+    $BUILD_DIR/php/bin/php www/vendor/zendframework/zendframework/bin/classmap_generator.php -l www/module/${dir##*/}/ -w -o www/module/${dir##*/}/autoload_classmap.php)
 done
 
 cat >>boot.sh <<EOF
