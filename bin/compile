@@ -84,10 +84,11 @@ if [ -f www/composer.json ]; then
 fi
 
 # compile zf2 autoload classmap files
+echo "-----> Compiling ZF2 autoload classmap files"
 for dir in www/module/*/
 do
     dir=${dir%*/}
-
+    echo "-----> Compiling autoload classmap file for " + ${dir##*/}
     $BUILD_DIR/php/bin/php www/vendor/zendframework/zendframework/bin/classmap_generator.php -l www/module/${dir##*/}/ -w -o www/module/${dir##*/}/autoload_classmap.php)
 done
 
