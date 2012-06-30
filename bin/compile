@@ -83,6 +83,13 @@ if [ -f www/composer.json ]; then
   export GIT_DIR=$GIT_DIR_ORIG
 fi
 
+# compile zf2 autoload classmap files
+for dir in www/module/*/
+do
+    dir=${dir%*/}
+    echo ${dir##*/}
+done
+
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do
   echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;
