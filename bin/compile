@@ -49,12 +49,12 @@ mkdir -p bin
 ln -s /app/php/bin/php bin/php
 
 # check if we have Composer dependencies and vendors are not bundled
-if [ -f www/composer.json ]; then
+if [ -f /app/www/composer.json ]; then
 
   # download composer.phar if it is not available
-  if [ ! -f www/composer.phar ]; then
+  if [ ! -f /app/www/composer.phar ]; then
   	echo "-----> Downloading and Installing Composer"
-  	curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar > /dev/null
+  	curl --silent --max-time 60 --location "$COMPOSER_URL" > /app/www/composer.phar > /dev/null
   fi
   
   # move into webroot
@@ -69,7 +69,7 @@ if [ -f www/composer.json ]; then
   GIT_DIR_ORIG=$GIT_DIR
   unset GIT_DIR
 
-  if [ ! -f www/composer.installed ]; then
+  if [ ! -f /app/www/composer.installed ]; then
   	echo "-----> Installing Composer Dependencies"
   	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
   	touch composer.installed
@@ -84,12 +84,12 @@ if [ -f www/composer.json ]; then
 fi
 
 # compile zf2 autoload classmap files
-echo "-----> Compiling ZF2 autoload classmap files"
-for dir in www/module/*/
-do
+#echo "-----> Compiling ZF2 autoload classmap files"
+#for dir in www/module/*/
+#do
     #echo "-----> Compiling autoload classmap file for " ${dir##*/}
     #$BUILD_DIR/php/bin/php www/vendor/zendframework/zendframework/bin/classmap_generator.php -l www/module/${dir##*/}/ -w -o www/module/${dir##*/}/autoload_classmap.php
-done
+#done
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do
