@@ -69,14 +69,14 @@ if [ -f www/composer.json ]; then
   GIT_DIR_ORIG=$GIT_DIR
   unset GIT_DIR
 
-  if [ -e www/composer.installed ]; then
+  if [ -e $BUILD_DIR/www/composer.installed ]; then
   	echo "-----> Updating Composer Dependencies"
     LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
   else
     echo "-----> Installing Composer Dependencies"
     LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
-    touch composer.installed
-    echo "Composer Installed." > composer.installed
+    touch $BUILD_DIR/www/composer.installed
+    echo "Composer Installed." > $BUILD_DIR/www/composer.installed
   fi
 
   # move back to the build directory
