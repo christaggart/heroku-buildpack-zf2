@@ -62,7 +62,7 @@ if [ -f www/composer.json ]; then
 
   # check for composer updates
   echo "-----> Updating Composer"
-  LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar self-update > /dev/null
+  LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar self-update
 
   # determine whether to update or install. If a lock file is present we want to
   # update instead of install
@@ -71,11 +71,11 @@ if [ -f www/composer.json ]; then
 
   if [ ! -f www/composer.installed ]; then
   	echo "-----> Installing Composer Dependencies"
-  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install > /dev/null
+  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
   	touch composer.installed
   else
   	echo "-----> Updating Composer Dependencies"
-  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update > /dev/null
+  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
   fi
 
   # move back to the build directory
@@ -87,8 +87,8 @@ fi
 echo "-----> Compiling ZF2 autoload classmap files"
 for dir in www/module/*/
 do
-    echo "-----> Compiling autoload classmap file for " ${dir##*/}
-    $BUILD_DIR/php/bin/php www/vendor/zendframework/zendframework/bin/classmap_generator.php -l www/module/${dir##*/}/ -w -o www/module/${dir##*/}/autoload_classmap.php
+    #echo "-----> Compiling autoload classmap file for " ${dir##*/}
+    #$BUILD_DIR/php/bin/php www/vendor/zendframework/zendframework/bin/classmap_generator.php -l www/module/${dir##*/}/ -w -o www/module/${dir##*/}/autoload_classmap.php
 done
 
 cat >>boot.sh <<EOF
