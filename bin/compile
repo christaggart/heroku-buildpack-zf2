@@ -49,10 +49,10 @@ mkdir -p bin
 ln -s /app/php/bin/php bin/php
 
 # check if we have Composer dependencies and vendors are not bundled
-if [ -f /app/www/composer.json ]; then
+if [ -f www/composer.json ]; then
 
   # download composer.phar if it is not available
-  if [ ! -f /app/www/composer.phar ]; then
+  if [ ! -f www/composer.phar ]; then
   	echo "-----> Downloading and Installing Composer"
   	curl --silent --max-time 60 --location "$COMPOSER_URL" > /app/www/composer.phar > /dev/null
   fi
@@ -69,13 +69,13 @@ if [ -f /app/www/composer.json ]; then
   GIT_DIR_ORIG=$GIT_DIR
   unset GIT_DIR
 
-  if [ ! -f /app/www/composer.installed ]; then
-  	echo "-----> Installing Composer Dependencies"
-  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
-  	touch composer.installed
-  else
+  if [ -f www/composer.installed ]; then
   	echo "-----> Updating Composer Dependencies"
-  	LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
+    LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar update
+  else
+    echo "-----> Installing Composer Dependencies"
+    LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php composer.phar install
+    touch composer.installed
   fi
 
   # move back to the build directory
