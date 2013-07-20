@@ -54,7 +54,7 @@ if [ -f www/composer.json ]; then
   # download composer.phar if it is not available
   if [ ! -f www/composer.phar ]; then
   	echo "-----> Installing Composer"
-  	cp $BIN_DIR/composer.phar /app/www/
+  	cp $BIN_DIR/composer.phar www/composer.phar
   fi
   
   # move into webroot
