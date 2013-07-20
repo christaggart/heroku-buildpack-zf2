@@ -53,8 +53,8 @@ if [ -f www/composer.json ]; then
 
   # download composer.phar if it is not available
   if [ ! -f www/composer.phar ]; then
-  	echo "-----> Downloading and Installing Composer"
-  	curl --silent --max-time 60 --location "$COMPOSER_URL" > /app/www/composer.phar > /dev/null
+  	echo "-----> Installing Composer"
+  	cp $BIN_DIR/composer.phar /app/www/
   fi
   
   # move into webroot
