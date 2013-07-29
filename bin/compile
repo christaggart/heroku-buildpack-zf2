@@ -107,7 +107,7 @@ exec /app/apache/bin/httpd -DNO_DETACH
 EOF
 
 chmod +x boot.sh
-chmod -R 644 /app/www/app/storage
+chmod -R 644 $BUILD_DIR/www/app/storage
 
 # clean the cache
 rm -rf $CACHE_DIR/*
